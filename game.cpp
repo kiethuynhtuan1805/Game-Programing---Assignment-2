@@ -87,24 +87,12 @@ bool Window::init()
     this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
 
     SDL_Surface *imageBackground = IMG_Load("./images/Startgame.png");
-    SDL_Surface *imagePlayer_1_1 = IMG_Load("./images/Run1P1.png");
-    SDL_Surface *imagePlayer_1_2 = IMG_Load("./images/Run1P1.png");
-    SDL_Surface *imagePlayer_2_1 = IMG_Load("./images/Run1P2.png");
-    SDL_Surface *imagePlayer_2_2 = IMG_Load("./images/Run1P2.png");
     SDL_Surface *imageBall = IMG_Load("./images/SoccerBall.bmp");
 
     this->textureBg = SDL_CreateTextureFromSurface(this->renderer, imageBackground);
-    this->textureP1_1 = SDL_CreateTextureFromSurface(this->renderer, imagePlayer_1_1);
-    this->textureP1_2 = SDL_CreateTextureFromSurface(this->renderer, imagePlayer_1_2);
-    this->textureP2_1 = SDL_CreateTextureFromSurface(this->renderer, imagePlayer_2_1);
-    this->textureP2_2 = SDL_CreateTextureFromSurface(this->renderer, imagePlayer_2_2);
     this->textureBall = SDL_CreateTextureFromSurface(this->renderer, imageBall);
 
     SDL_FreeSurface(imageBackground);
-    SDL_FreeSurface(imagePlayer_1_1);
-    SDL_FreeSurface(imagePlayer_1_2);
-    SDL_FreeSurface(imagePlayer_2_1);
-    SDL_FreeSurface(imagePlayer_2_2);
     SDL_FreeSurface(imageBall);
 
     if (!this->renderer)
@@ -231,7 +219,8 @@ void Window::start()
                     this->started = true;
                     if (!this->rePlay)
                     {
-                        this->mTimer = Timer::Instance();
+                        this->mTimer->mStartTicks = SDL_GetTicks();
+                        this->mTimer->Reset();
                     }
                     else
                     {
@@ -974,6 +963,15 @@ void Window::resetInitialState()
 
     this->lastTime = 60;
     this->time = "60";
+
+    if (!this->rePlay)
+    {
+        this->mTimer = Timer::Instance();
+    }
+    else
+    {
+        this->mTimer->Reset();
+    }
 
     this->mode = 0;
 

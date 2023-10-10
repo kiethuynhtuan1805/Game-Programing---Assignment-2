@@ -4,10 +4,12 @@ class Timer
 {
 private:
     static Timer *sInstance;
-    unsigned int mStartTicks;
     unsigned int mElapsedTicks;
     float mDeltaTime;
     float mTimeScale;
+
+public:
+    unsigned int mStartTicks;
 
 public:
     static Timer *Instance();
@@ -83,8 +85,8 @@ private:
 
     // Timer
     Timer *mTimer;
-    int lastTime = 60;
-    string time = "60";
+    int lastTime;
+    string time;
 
     // Font
     TTF_Font *font;
